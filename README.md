@@ -14,7 +14,7 @@ O objetivo deste trabalho prático é implementar uma aplicação de mensagem in
 
 `npm start`
 
-### Para simula uso
+### Para simular uso
 
 - Podem ser abertas duas abas ou mais e ser colocado/enviado nomes e mensagens simulando outros usuários em uma conversa
 
