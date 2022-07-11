@@ -1,0 +1,106 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Chat Socket</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.js"></script>
+  </head>
+  <body>
+    <form id="page-chat">
+      <h1>Inicie uma conversa</h1>
+      <div class="mensagens"></div>
+      <input
+        type="text"
+        name="nomeUsuario"
+        placeholder="Escreva seu nome"
+        autocomplete="off"
+      />
+      <input
+        type="text"
+        name="mensagem"
+        placeholder="Escreva uma mensagem"
+        autocomplete="off"
+      />
+      <button type="submit">Enviar</button>
+    </form>
+  </body>
+</html>
+
+<script type="text/javascript">
+  let socket = io("http://localhost:3000");
+
+  function postMensagens(data) {
+    let mensagens = $(".mensagens");
+    mensagens.append(`<p><b>${data.nomeUsuario}</b>: ${data.mensagem}</p>`);
+  }
+
+  socket.on("previousMessages", (mensagens) => {
+    for (const mensagem of mensagens) {
+      postMensagens(mensagem);
+    }
+  });
+
+  socket.on("newMessage", postMensagens);
+
+  $("#page-chat").submit(function (e) {
+    e.preventDefault();
+
+    let nomeUsuario = $('input[name="nomeUsuario"]').val();
+    let mensagem = $('input[name="mensagem"]').val();
+
+    if (nomeUsuario.length && mensagem.length) {
+      let mensagemObjeto = {
+        nomeUsuario: nomeUsuario,
+        mensagem: mensagem,
+      };
+      postMensagens(mensagemObjeto);
+
+      socket.emit("sendMessage", mensagemObjeto);
+    }
+  });
+</script>
+
+<style>
+  h1 {
+    margin: 0;
+    color: #008000;
+  }
+
+  #page-chat {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .mensagens {
+    width: 32vw;
+    height: 40vw;
+    border: 1px solid #111010;
+    padding-left: 2vw;
+    border-radius: 15px;
+    margin: 2vw 0;
+    overflow-y: auto;
+  }
+
+  input {
+    width: 34.3vw;
+    border: 1px solid black;
+    height: 5vw;
+    padding: 0 2vw;
+    font-size: 1.5vw;
+    border-radius: 10px;
+    margin-bottom: 1vw;
+  }
+
+  button {
+    width: 10vw;
+    height: 5vw;
+    font-size: 1.5vw;
+    background: #008000;
+    text-align: center;
+    font-weight: bold;
+    color: #fff;
+    border-radius: 20px;
+  }
+</style>

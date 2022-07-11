@@ -1,0 +1,24 @@
+{
+  "name": "chat-socket",
+  "version": "1.0.0",
+  "description": "Trabalho prático I de Sistemas Distribuídos",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/taianers/chat-socket.git"
+  },
+  "author": "Luiz Carlos Bessa de Lima e Taiane Rodrigues de Sousa",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/taianers/chat-socket/issues"
+  },
+  "homepage": "https://github.com/taianers/chat-socket#readme",
+  "dependencies": {
+    "ejs": "^3.1.8",
+    "express": "^4.18.1",
+    "socket.io": "^4.5.1"
+  }
+}
